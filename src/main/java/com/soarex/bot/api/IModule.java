@@ -8,9 +8,4 @@ public interface IModule extends Runnable {
     String getName();
     String getAuthor();
     String getVersion();
-
-    public boolean enable();
-    public void disable();
-
-    public void onMessage();
 }

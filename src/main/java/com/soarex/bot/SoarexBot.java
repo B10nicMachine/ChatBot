@@ -1,10 +1,15 @@
 package com.soarex.bot;
 
+import com.soarex.bot.modules.ModuleLoader;
+import com.soarex.bot.modules.Twitch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -53,6 +58,20 @@ public class SoarexBot {
     }
 
     public static void main(String[] args) {
+        /*
+        try {
+            Class.forName(properties.getProperty("jdbcClass"));
+            SoarexBot.LOGGER.info("Succesfully loaded DataBase driver");
 
+            Connection connection = DriverManager.getConnection(properties.getProperty("dbUrl"), properties.getProperty("dbUser"), properties.getProperty("dbPassword"));
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        */
+        loadNativeModules();
+    }
+
+    private static void loadNativeModules() {
+        ModuleLoader.loadModule(Twitch.class);
     }
 }
