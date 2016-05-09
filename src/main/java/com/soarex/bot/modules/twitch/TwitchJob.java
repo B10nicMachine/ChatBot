@@ -12,6 +12,6 @@ public class TwitchJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        SoarexBot.LOGGER.warn("WOOOOOOOOOOOOORK!!!");
+        StreamNotifier notifier = new StreamNotifier();
     }
 }

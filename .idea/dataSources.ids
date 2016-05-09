@@ -8,16 +8,36 @@
     <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact"/>
     <database-model serializer="dbm" rdbms="MYSQL" format-version="2.4">
       <schema id="1" name="shumaf"/>
-      <table id="2" parent="1" name="discord"/>
-      <column id="3" parent="2" name="id">
-        <mandatory>1</mandatory>
-        <data-type>int(10)</data-type>
-      </column>
-      <column id="4" parent="2" name="user">
+      <table id="2" parent="1" name="streamers"/>
+      <table id="3" parent="1" name="discord"/>
+      <column id="4" parent="2" name="nick">
         <mandatory>1</mandatory>
         <data-type>varchar(20)</data-type>
       </column>
-      <key id="5" parent="2" name="PRIMARY">
+      <column id="5" parent="2" name="link">
+        <mandatory>1</mandatory>
+        <data-type>varchar(50)</data-type>
+      </column>
+      <column id="6" parent="2" name="streamId">
+        <mandatory>1</mandatory>
+        <data-type>int(10)</data-type>
+      </column>
+      <key id="7" parent="2" name="PRIMARY">
+        <columns>nick</columns>
+        <primary>1</primary>
+      </key>
+      <column id="8" parent="3" name="id">
+        <mandatory>1</mandatory>
+        <data-type>int(10)</data-type>
+      </column>
+      <column id="9" parent="3" name="name">
+        <mandatory>1</mandatory>
+        <data-type>varchar(50)</data-type>
+      </column>
+      <column id="10" parent="3" name="obscene">
+        <data-type>int(10)</data-type>
+      </column>
+      <key id="11" parent="3" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>

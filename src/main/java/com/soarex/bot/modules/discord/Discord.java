@@ -44,16 +44,12 @@ public class Discord implements IModule {
             properties.load(stream);
             stream.close();
             token = properties.getProperty("discord.token");
-        } catch (IOException e) {
-            SoarexBot.LOGGER.error("Discord Module Internal Exception", e);
-        }
-        try {
             discordClient = new ClientBuilder().withToken(token).login();
-        } catch (DiscordException e) {
+        } catch (IOException | DiscordException e) {
             SoarexBot.LOGGER.error("Discord Module Internal Exception", e);
         }
         EventDispatcher dispatcher = discordClient.getDispatcher();
         dispatcher.registerListener(new DiscordListener());
-        Connection connection = DBUtils.connect();
+        //Connection connection = DBUtils.connect();
     }
 }

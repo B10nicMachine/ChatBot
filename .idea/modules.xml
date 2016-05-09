@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ChatBot.iml" filepath="$PROJECT_DIR$/ChatBot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jTwitch/jTwitch.iml" filepath="$PROJECT_DIR$/jTwitch/jTwitch.iml" />
     </modules>
   </component>
 </project>
