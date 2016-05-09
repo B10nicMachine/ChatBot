@@ -30,8 +30,7 @@ public class DBUtils {
             Class.forName(SoarexBot.DB_DRIVER);
             SoarexBot.LOGGER.info("Using {} data base driver", SoarexBot.DB_DRIVER);
             SoarexBot.LOGGER.info("Succesfully loaded DataBase driver");
-
-            SoarexBot.LOGGER.info("Successfully connected to database in MAIN THREAD \n URL : {} \n USER : {} \n PASSWORD : {}", SoarexBot.DB_URL, SoarexBot.DB_USER, SoarexBot.DB_PASSWORD);
+            SoarexBot.LOGGER.info("Successfully connected to database \n URL : {} \n USER : {} \n PASSWORD : {}", SoarexBot.DB_URL, SoarexBot.DB_USER, SoarexBot.DB_PASSWORD);
             return DriverManager.getConnection(SoarexBot.DB_URL, SoarexBot.DB_USER, SoarexBot.DB_PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
             SoarexBot.LOGGER.error("Unable to connect to DataBase : ", e);

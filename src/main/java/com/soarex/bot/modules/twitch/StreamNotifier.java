@@ -24,7 +24,7 @@ public class StreamNotifier {
 
     private static InputStream stream = StreamNotifier.class.getClassLoader().getResourceAsStream("SoarexBot.properties");
     private static Properties properties = new Properties();
-    public static String baseUrl, clientId, clientSecret, redirectUrl, diskordNotifyChannel = null;
+    public static String baseUrl, clientId, clientSecret, redirectUrl, discordNotifyChannel = null;
 
     public StreamNotifier() {
         try {
@@ -34,7 +34,7 @@ public class StreamNotifier {
             clientId = properties.getProperty("twitch.client");
             clientSecret = properties.getProperty("twitch.secret");
             redirectUrl = properties.getProperty("twitch.redirect");
-            diskordNotifyChannel = properties.getProperty("twitch.diskordNotifyChannel");
+            discordNotifyChannel = properties.getProperty("twitch.discordNotifyChannel");
         } catch (IOException e) {
             SoarexBot.LOGGER.error("Twitch Module Internal Exception", e);
         }
@@ -50,7 +50,9 @@ public class StreamNotifier {
                 Optional<StreamCheck> check = instance.streams().stream(link);
                 if(!check.get().getStream().getId().equals(streamId)) {
                     RequestBuffer.request(() -> {
-                        new MessageBuilder(Discord.discordClient).withChannel(diskordNotifyChannel).withContent("Прямо сейчас " + nick + " начинает свое вещание. Играем в " + check.get().getStream().getGame() + ". Смотреть здесь : http://www.twitch.tv/" + link);
+                        MessageBuilder builder = new MessageBuilder(Discord.discordClient)
+                                .withChannel(discordNotifyChannel)
+                                .withContent("Прямо сейчас " + nick + " начинает свое вещание. Играем в " + check.get().getStream().getGame() + ". Смотреть здесь : http://www.twitch.tv/" + link);
                         return null;
                     });
                     statement.executeUpdate("UPDATE streamers SET streamId=" + streamId + " WHERE nick=" + nick);
