@@ -24,6 +24,10 @@ jar {
 
 repositories {
     mavenCentral()
+    jcenter()
+    maven {
+        url  "https://jitpack.io"
+    }
 }
 
 dependencies {
@@ -35,13 +39,17 @@ dependencies {
     exported 'org.json:json:20151123'
     exported 'org.java-websocket:Java-WebSocket:1.3.0'
     exported 'com.neovisionaries:nv-websocket-client:1.19'
-
     exported 'net.objecthunter:exp4j:0.4.5'
     exported 'com.googlecode.json-simple:json-simple:1.1.1'
     exported 'org.quartz-scheduler:quartz:2.2.2'
     exported 'org.slf4j:slf4j-api:1.7.21'
     exported 'org.slf4j:slf4j-simple:1.7.21'
-    exported 'postgresql:postgresql:9.1-901-1.jdbc4'
+    exported 'org.mariadb.jdbc:mariadb-java-client:1.4.4'
+
+    exported 'com.github.austinv11:Discord4j:2.4.7'
+    exported project(':jTwitch')
+
+    exported 'com.google.apis:google-api-services-youtube:v3-rev171-1.22.0'
 
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }

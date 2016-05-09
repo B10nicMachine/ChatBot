@@ -1,15 +1,15 @@
 package com.soarex.bot;
 
+import com.soarex.bot.modules.discord.Discord;
 import com.soarex.bot.modules.ModuleLoader;
-import com.soarex.bot.modules.Twitch;
+import com.soarex.bot.modules.twitch.Twitch;
+import com.soarex.bot.modules.youtube.Youtube;
+import com.soarex.bot.utils.ObsceneFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -34,14 +34,20 @@ public class SoarexBot {
      */
     public static final String DESCRIPTION;
 
+    public static final String DB_URL;
+    public static final String DB_USER;
+    public static final String DB_PASSWORD;
+    public static final String DB_DRIVER;
+
     /**
      * SLF4J Instance
      */
     public static final Logger LOGGER = LoggerFactory.getLogger(SoarexBot.class);
 
+    public static Properties properties = new Properties();
+
     static {
         InputStream stream = SoarexBot.class.getClassLoader().getResourceAsStream("SoarexBot.properties");
-        Properties properties = new Properties();
         try {
             properties.load(stream);
             stream.close();
@@ -53,25 +59,27 @@ public class SoarexBot {
         AUTHOR = properties.getProperty("application.author");
         DESCRIPTION = properties.getProperty("application.description");
 
+        DB_DRIVER = properties.getProperty("db.class");
+        DB_URL = properties.getProperty("db.url");
+        DB_USER = properties.getProperty("db.user");
+        DB_PASSWORD = properties.getProperty("db.password");
+
         LOGGER.info("{} v{} by {}", NAME, VERSION, AUTHOR);
         LOGGER.info("{}", DESCRIPTION);
     }
 
     public static void main(String[] args) {
-        /*
-        try {
-            Class.forName(properties.getProperty("jdbcClass"));
-            SoarexBot.LOGGER.info("Succesfully loaded DataBase driver");
-
-            Connection connection = DriverManager.getConnection(properties.getProperty("dbUrl"), properties.getProperty("dbUser"), properties.getProperty("dbPassword"));
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        */
         loadNativeModules();
     }
 
     private static void loadNativeModules() {
+        ModuleLoader.loadModule(Discord.class);
         ModuleLoader.loadModule(Twitch.class);
+        ModuleLoader.loadModule(Youtube.class);
+    }
+
+    public static void shutdown() {
+        LOGGER.info("Shutting down Soarex::BOT");
+        System.exit(0);
     }
 }

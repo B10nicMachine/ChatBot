@@ -1,4 +1,4 @@
-package com.soarex.bot.modules;
+package com.soarex.bot.modules.twitch;
 
 import com.soarex.bot.api.IModule;
 import org.quartz.*;

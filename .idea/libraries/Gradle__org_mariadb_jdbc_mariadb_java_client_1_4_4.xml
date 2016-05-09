@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.mariadb.jdbc:mariadb-java-client:1.4.4">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mariadb.jdbc/mariadb-java-client/1.4.4/a0743a973c28944ff30ba527e2005e5b3320eb78/mariadb-java-client-1.4.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.mariadb.jdbc/mariadb-java-client/1.4.4/45d682b275736ebf5881828187165cc991664345/mariadb-java-client-1.4.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

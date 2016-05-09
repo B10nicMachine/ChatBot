@@ -79,8 +79,8 @@ public class ModuleLoader {
             Thread thread = new Thread((Runnable) module);
             thread.start();
             modulesClasses.add(clazz);
-        } catch (InstantiationException |IllegalAccessException e) {
-            SoarexBot.LOGGER.error("Unable to load module :", e);
+        } catch (InstantiationException | IllegalAccessException e) {
+            SoarexBot.LOGGER.error("Unable to load module : ", e);
         }
     }
 }
