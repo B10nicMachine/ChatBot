@@ -20,13 +20,13 @@ public class DiscordListener {
         String msg = event.getMessage().getContent();
         if (!ObsceneFilter.isAllowed(msg))
             try {
-                event.getMessage().getChannel().sendMessage(event.getMessage().getAuthor().mention() + " ,не ругайся! В твоем сообщении " + ObsceneFilter.invective.size() + " мат(ов)");
+                event.getMessage().getChannel().sendMessage(event.getMessage().getAuthor().mention() + ", не ругайся! В твоем сообщении " + ObsceneFilter.invective.size() + " мат(ов)");
             } catch (MissingPermissionsException e) {
-                SoarexBot.LOGGER.warn("Insufficient permissions to edit messages : ", e);
+                SoarexBot.LOGGER.error("Insufficient permissions to edit messages : ", e);
             } catch (HTTP429Exception e) {
-                e.printStackTrace();
+                SoarexBot.LOGGER.error("Can't send message, too many requests : ", e);
             } catch (DiscordException e) {
-                e.printStackTrace();
+                SoarexBot.LOGGER.error("Discord module internal exception : ", e);
         }
     }
 }
