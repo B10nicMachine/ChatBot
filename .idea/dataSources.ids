@@ -16,14 +16,14 @@
       </column>
       <column id="5" parent="2" name="link">
         <mandatory>1</mandatory>
-        <data-type>varchar(50)</data-type>
+        <data-type>varchar(20)</data-type>
       </column>
       <column id="6" parent="2" name="streamId">
         <mandatory>1</mandatory>
-        <data-type>int(10)</data-type>
+        <data-type>bigint(20)</data-type>
       </column>
       <key id="7" parent="2" name="PRIMARY">
-        <columns>nick</columns>
+        <columns>link</columns>
         <primary>1</primary>
       </key>
       <column id="8" parent="3" name="id">

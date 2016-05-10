@@ -1,6 +1,7 @@
 package com.soarex.bot.modules.twitch;
 
 import com.soarex.bot.SoarexBot;
+import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;

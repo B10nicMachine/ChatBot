@@ -7,6 +7,8 @@ import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.EventDispatcher;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.util.DiscordException;
+import sx.blah.discord.util.MessageBuilder;
+import sx.blah.discord.util.RequestBuffer;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +21,20 @@ import java.util.Properties;
 public class Discord implements IModule {
 
     public static IDiscordClient discordClient;
+
+    static {
+        InputStream stream = Discord.class.getClassLoader().getResourceAsStream("SoarexBot.properties");
+        Properties properties = new Properties();
+        String token = null;
+        try {
+            properties.load(stream);
+            stream.close();
+            token = properties.getProperty("discord.token");
+            discordClient = new ClientBuilder().withToken(token).login();
+        } catch (IOException | DiscordException e) {
+            SoarexBot.LOGGER.error("Discord Module Internal Exception", e);
+        }
+    }
 
     @Override
     public String getName() {
@@ -37,19 +53,10 @@ public class Discord implements IModule {
 
     @Override
     public void run() {
-        InputStream stream = Discord.class.getClassLoader().getResourceAsStream("SoarexBot.properties");
-        Properties properties = new Properties();
-        String token = null;
-        try {
-            properties.load(stream);
-            stream.close();
-            token = properties.getProperty("discord.token");
-            discordClient = new ClientBuilder().withToken(token).login();
-        } catch (IOException | DiscordException e) {
-            SoarexBot.LOGGER.error("Discord Module Internal Exception", e);
-        }
         EventDispatcher dispatcher = discordClient.getDispatcher();
         dispatcher.registerListener(new DiscordListener());
         //Connection connection = DBUtils.connect();
+
+
     }
 }

@@ -75,7 +75,7 @@ public class SoarexBot {
     private static void loadNativeModules() {
         ModuleLoader.loadModule(Discord.class);
         ModuleLoader.loadModule(Twitch.class);
-        ModuleLoader.loadModule(Youtube.class);
+        //ModuleLoader.loadModule(Youtube.class);
     }
 
     public static void shutdown() {
