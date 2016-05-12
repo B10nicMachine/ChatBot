@@ -36,7 +36,6 @@ public class Discord implements IModule {
 
     public static IDiscordClient discordClient;
     public static Connection connection;
-    public static IGuild guild;
 
     public static int maxObscene;
     public static boolean obsceneDelete;

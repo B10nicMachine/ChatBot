@@ -25,6 +25,7 @@ import java.util.Properties;
  */
 public class StreamNotifier {
 
+    private static Twitch instance;
     private static Properties properties = new Properties();
     public static String baseUrl, clientId, clientSecret, redirectUrl, discordNotifyChannel = null;
 
@@ -42,8 +43,10 @@ public class StreamNotifier {
         } catch (IOException e) {
             SoarexBot.LOGGER.error("Twitch Module Internal Exception", e);
         }
-        Twitch instance = Twitch.newTwitchInstance(baseUrl, clientId, clientSecret, redirectUrl);
+        instance = Twitch.newTwitchInstance(baseUrl, clientId, clientSecret, redirectUrl);
+    }
 
+    public void check() {
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("SELECT * FROM streamers");

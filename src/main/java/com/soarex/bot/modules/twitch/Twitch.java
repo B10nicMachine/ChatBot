@@ -5,6 +5,8 @@ import com.soarex.bot.modules.discord.Discord;
 import com.soarex.bot.utils.DBUtils;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import sx.blah.discord.api.EventSubscriber;
+import sx.blah.discord.handle.impl.events.GuildCreateEvent;
 import sx.blah.discord.util.MessageBuilder;
 import sx.blah.discord.util.RequestBuffer;
 
@@ -16,6 +18,7 @@ import java.sql.Connection;
 public class Twitch implements IModule {
 
     public static Connection connection;
+    public static StreamNotifier notifier;
 
     @Override
     public String getName() {
@@ -34,8 +37,13 @@ public class Twitch implements IModule {
 
     @Override
     public void run() {
+        connection = DBUtils.connect();
+        notifier = new StreamNotifier();
+    }
+
+    @EventSubscriber
+    public void onDiscordInit(GuildCreateEvent event) {
         try {
-            connection = DBUtils.connect();
             JobDetail jobDetail = JobBuilder.newJob(TwitchJob.class).withIdentity("twitch").build();
             Trigger trigger = TriggerBuilder.newTrigger().startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(30).repeatForever()).build();
             StdSchedulerFactory.getDefaultScheduler().scheduleJob(jobDetail, trigger);

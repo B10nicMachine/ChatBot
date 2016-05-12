@@ -3,8 +3,6 @@ package com.soarex.bot;
 import com.soarex.bot.modules.discord.Discord;
 import com.soarex.bot.modules.ModuleLoader;
 import com.soarex.bot.modules.twitch.Twitch;
-import com.soarex.bot.modules.youtube.Youtube;
-import com.soarex.bot.utils.ObsceneFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -74,8 +72,7 @@ public class SoarexBot {
 
     private static void loadNativeModules() {
         ModuleLoader.loadModule(Discord.class);
-        ModuleLoader.loadModule(Twitch.class);
-        //ModuleLoader.loadModule(Youtube.class);
+        //ModuleLoader.loadModule(Twitch.class);
     }
 
     public static void shutdown() {
