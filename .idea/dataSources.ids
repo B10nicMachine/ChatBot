@@ -28,16 +28,13 @@
       </key>
       <column id="8" parent="3" name="id">
         <mandatory>1</mandatory>
-        <data-type>int(10)</data-type>
+        <data-type>varchar(20)</data-type>
       </column>
-      <column id="9" parent="3" name="name">
-        <mandatory>1</mandatory>
-        <data-type>varchar(50)</data-type>
+      <column id="9" parent="3" name="obscene">
+        <data-type>int(11)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
       </column>
-      <column id="10" parent="3" name="obscene">
-        <data-type>int(10)</data-type>
-      </column>
-      <key id="11" parent="3" name="PRIMARY">
+      <key id="10" parent="3" name="PRIMARY">
         <columns>id</columns>
         <primary>1</primary>
       </key>
