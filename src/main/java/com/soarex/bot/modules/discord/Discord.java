@@ -2,11 +2,15 @@ package com.soarex.bot.modules.discord;
 
 import com.soarex.bot.SoarexBot;
 import com.soarex.bot.api.IModule;
+import com.soarex.bot.modules.twitch.TwitchJob;
 import com.soarex.bot.utils.DBUtils;
 import com.soarex.bot.utils.ObsceneFilter;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.EventDispatcher;
 import sx.blah.discord.api.IDiscordClient;
+import sx.blah.discord.handle.impl.events.GuildCreateEvent;
+import sx.blah.discord.handle.impl.obj.Guild;
+import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MessageBuilder;
@@ -32,6 +36,7 @@ public class Discord implements IModule {
 
     public static IDiscordClient discordClient;
     public static Connection connection;
+    public static IGuild guild;
 
     public static int maxObscene;
     public static boolean obsceneDelete;
@@ -74,5 +79,6 @@ public class Discord implements IModule {
     public void run() {
         EventDispatcher dispatcher = discordClient.getDispatcher();
         dispatcher.registerListener(new ObsceneListener());
+        dispatcher.registerListener(new TwitchJob());
     }
 }

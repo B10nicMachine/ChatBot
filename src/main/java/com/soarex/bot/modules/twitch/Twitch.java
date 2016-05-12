@@ -36,7 +36,6 @@ public class Twitch implements IModule {
     public void run() {
         try {
             connection = DBUtils.connect();
-
             JobDetail jobDetail = JobBuilder.newJob(TwitchJob.class).withIdentity("twitch").build();
             Trigger trigger = TriggerBuilder.newTrigger().startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(30).repeatForever()).build();
             StdSchedulerFactory.getDefaultScheduler().scheduleJob(jobDetail, trigger);
