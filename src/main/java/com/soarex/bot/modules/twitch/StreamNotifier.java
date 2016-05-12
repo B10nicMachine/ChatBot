@@ -25,12 +25,12 @@ import java.util.Properties;
  */
 public class StreamNotifier {
 
-    private static InputStream stream;
     private static Properties properties = new Properties();
     public static String baseUrl, clientId, clientSecret, redirectUrl, discordNotifyChannel = null;
 
     public StreamNotifier() {
         try {
+            InputStream stream;
             stream = StreamNotifier.class.getClassLoader().getResourceAsStream("SoarexBot.properties");
             properties.load(stream);
             stream.close();
