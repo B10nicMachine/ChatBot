@@ -17,8 +17,6 @@ import java.sql.*;
  */
 public class ObsceneListener {
 
-    static boolean t = true;
-
     @EventSubscriber
     public void onMessageReceivedEvent(MessageReceivedEvent event) {
         if(event.getMessage().getAuthor().getID().equals(discordClient.getOurUser().getID())) return;
@@ -27,7 +25,6 @@ public class ObsceneListener {
             try {
                 String author = event.getMessage().getAuthor().getID();
 
-                Statement statement = connection.createStatement();
                 PreparedStatement select = connection.prepareStatement("SELECT obscene FROM discord WHERE id=?");
                 PreparedStatement update = connection.prepareStatement("UPDATE discord SET obscene=? WHERE id=?");
                 select.setString(1, author);
