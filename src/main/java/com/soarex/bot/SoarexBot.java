@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.Properties;
 
 /**
@@ -31,7 +32,14 @@ public class SoarexBot {
      * The api's description
      */
     public static final String DESCRIPTION;
+    /**
+     * Modules directory
+     */
+    public static final String MODULE_DIR;
 
+    /**
+     * Database constants
+     */
     public static final String DB_URL;
     public static final String DB_USER;
     public static final String DB_PASSWORD;
@@ -42,7 +50,7 @@ public class SoarexBot {
      */
     public static final Logger LOGGER = LoggerFactory.getLogger(SoarexBot.class);
 
-    public static Properties properties = new Properties();
+    private static final Properties properties = new Properties();
 
     static {
         InputStream stream = SoarexBot.class.getClassLoader().getResourceAsStream("SoarexBot.properties");
@@ -56,6 +64,7 @@ public class SoarexBot {
         VERSION = properties.getProperty("application.version");
         AUTHOR = properties.getProperty("application.author");
         DESCRIPTION = properties.getProperty("application.description");
+        MODULE_DIR = properties.getProperty("application.modules");
 
         DB_DRIVER = properties.getProperty("db.class");
         DB_URL = properties.getProperty("db.url");
@@ -72,7 +81,7 @@ public class SoarexBot {
 
     private static void loadNativeModules() {
         ModuleLoader.loadModule(Discord.class);
-        //ModuleLoader.loadModule(Twitch.class);
+        ModuleLoader.loadModule(Twitch.class);
     }
 
     public static void shutdown() {

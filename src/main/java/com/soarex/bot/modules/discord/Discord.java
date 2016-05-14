@@ -2,32 +2,18 @@ package com.soarex.bot.modules.discord;
 
 import com.soarex.bot.SoarexBot;
 import com.soarex.bot.api.IModule;
-import com.soarex.bot.modules.twitch.TwitchJob;
+import com.soarex.bot.CommandDispatcher;
+import com.soarex.bot.modules.discord.commands.*;
 import com.soarex.bot.utils.DBUtils;
-import com.soarex.bot.utils.ObsceneFilter;
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.EventDispatcher;
 import sx.blah.discord.api.IDiscordClient;
-import sx.blah.discord.handle.impl.events.GuildCreateEvent;
-import sx.blah.discord.handle.impl.obj.Guild;
-import sx.blah.discord.handle.obj.IGuild;
-import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.DiscordException;
-import sx.blah.discord.util.MessageBuilder;
-import sx.blah.discord.util.RequestBuffer;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Properties;
-import java.util.function.BooleanSupplier;
-
-import static com.soarex.bot.modules.twitch.Twitch.connection;
 
 /**
  * Created by shumaf on 07.05.16.
@@ -41,10 +27,12 @@ public class Discord implements IModule {
     public static boolean obsceneDelete;
     public static boolean obsceneBan;
 
+    public static String musicChannel;
+
     static {
         InputStream stream = Discord.class.getClassLoader().getResourceAsStream("SoarexBot.properties");
         Properties properties = new Properties();
-        String token = null;
+        String token;
         try {
             properties.load(stream);
             stream.close();
@@ -53,6 +41,8 @@ public class Discord implements IModule {
             obsceneDelete = Boolean.parseBoolean(properties.getProperty("discord.obsceneDelete"));
             obsceneBan = Boolean.parseBoolean(properties.getProperty("discord.obsceneBan"));
             discordClient = new ClientBuilder().withToken(token).login();
+
+            musicChannel = properties.getProperty("discord.music");
         } catch (IOException | DiscordException e) {
             SoarexBot.LOGGER.error("Discord Module Internal Exception", e);
         }
@@ -77,7 +67,18 @@ public class Discord implements IModule {
     @Override
     public void run() {
         EventDispatcher dispatcher = discordClient.getDispatcher();
-        dispatcher.registerListener(new ObsceneListener());
-        dispatcher.registerListener(new TwitchJob());
+        dispatcher.registerListener(new MsgListener());
+
+        registerCommands();
+    }
+
+    private void registerCommands() {
+        CommandDispatcher.registerCmd("!help", new Help());
+        CommandDispatcher.registerCmd("!debug", new Debug());
+        CommandDispatcher.registerCmd("!музыку", new VKMusic());
+        CommandDispatcher.registerCmd("!громкость", new Vollume());
+        CommandDispatcher.registerCmd("!пауза", new Pause());
+        CommandDispatcher.registerCmd("!пропустить", new Skip());
+        CommandDispatcher.registerCmd("!продолжить", new Resume());
     }
 }

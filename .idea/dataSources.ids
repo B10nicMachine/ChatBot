@@ -21,6 +21,7 @@
       <column id="6" parent="2" name="streamId">
         <mandatory>1</mandatory>
         <data-type>bigint(20)</data-type>
+        <default-expression>&apos;0&apos;</default-expression>
       </column>
       <key id="7" parent="2" name="PRIMARY">
         <columns>link</columns>

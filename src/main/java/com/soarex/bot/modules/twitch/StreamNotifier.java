@@ -27,7 +27,7 @@ public class StreamNotifier {
 
     private static Twitch instance;
     private static Properties properties = new Properties();
-    public static String baseUrl, clientId, clientSecret, redirectUrl, discordNotifyChannel = null;
+    private static String baseUrl, clientId, clientSecret, redirectUrl, discordNotifyChannel = null;
 
     public StreamNotifier() {
         try {
@@ -52,7 +52,7 @@ public class StreamNotifier {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM streamers");
             String query = "UPDATE streamers SET streamId=? WHERE nick=?";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            MessageBuilder builder = new MessageBuilder(Discord.discordClient).withChannel(discordNotifyChannel);
+            MessageBuilder builder = new MessageBuilder(Discord.discordClient);
             while (resultSet.next()) {
                 String nick = resultSet.getString("nick");
                 String link = resultSet.getString("link");
@@ -61,12 +61,13 @@ public class StreamNotifier {
                 if (check.get().getStream() != null && !check.get().getStream().getId().equals(streamId)) {
                     RequestBuffer.request(() -> {
                         try {
-                            builder.withContent("Прямо сейчас " + nick + " начинает свое вещание. Играем в " + check.get().getStream().getGame() + ". Смотреть здесь : http://www.twitch.tv/" + link).build();
+                            builder.withChannel(discordNotifyChannel).withContent("Прямо сейчас " + nick + " начинает свое вещание. Играем в " + check.get().getStream().getGame() + ". Смотреть здесь : http://www.twitch.tv/" + link).build();
                         } catch (DiscordException | MissingPermissionsException e) {
                             SoarexBot.LOGGER.warn("Unable to send notification about broadcast : ", e);
                         }
                         return null;
                     });
+                    SoarexBot.LOGGER.info("[TWITCH|{}::{}|Viewers: {}]", link, check.get().getStream().getGame(), check.get().getStream().getViewers());
                     streamId = check.get().getStream().getId();
                     preparedStatement.setLong(1, streamId);
                     preparedStatement.setString(2, nick);

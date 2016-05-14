@@ -17,16 +17,15 @@ import java.util.jar.JarFile;
  */
 public class ModuleLoader {
 
-    public static final String MODULE_DIR = "modules";
     private static final List<Class<? extends IModule>> modulesClasses = new CopyOnWriteArrayList<>();
 
-    public static List<IModule> modules = new CopyOnWriteArrayList<>();
+    private static List<IModule> modules = new CopyOnWriteArrayList<>();
 
     static {
-        File modulesDir = new File(MODULE_DIR);
+        File modulesDir = new File(SoarexBot.MODULE_DIR);
         if (modulesDir.exists()) {
             if (!modulesDir.isDirectory()) {
-                throw new RuntimeException(MODULE_DIR + " isn't a directory");
+                throw new RuntimeException(SoarexBot.MODULE_DIR + " isn't a directory");
             }
         } else {
             if (!modulesDir.mkdir()) {
@@ -39,6 +38,10 @@ public class ModuleLoader {
             SoarexBot.LOGGER.info("Attempting to load {} external module(s)", files.length);
             for (File file : files) loadModule(file);
         }
+    }
+
+    public static List<IModule> getModules() {
+        return modules;
     }
 
     public static synchronized void loadModule(File file) {
@@ -73,10 +76,10 @@ public class ModuleLoader {
 
     public static void initIModule(Class<? extends IModule> clazz) {
         try{
-            IModule module = (IModule) clazz.newInstance();
+            IModule module = clazz.newInstance();
             modules.add(module);
             SoarexBot.LOGGER.info("Loading module {} v{} by {}", module.getName(), module.getVersion(), module.getAuthor());
-            Thread thread = new Thread((Runnable) module);
+            Thread thread = new Thread(module);
             thread.start();
             modulesClasses.add(clazz);
         } catch (InstantiationException | IllegalAccessException e) {

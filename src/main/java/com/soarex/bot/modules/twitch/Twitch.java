@@ -1,16 +1,12 @@
 package com.soarex.bot.modules.twitch;
 
 import com.soarex.bot.api.IModule;
-import com.soarex.bot.modules.discord.Discord;
 import com.soarex.bot.utils.DBUtils;
-import org.quartz.*;
-import org.quartz.impl.StdSchedulerFactory;
-import sx.blah.discord.api.EventSubscriber;
-import sx.blah.discord.handle.impl.events.GuildCreateEvent;
-import sx.blah.discord.util.MessageBuilder;
-import sx.blah.discord.util.RequestBuffer;
 
 import java.sql.Connection;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by shumaf on 04.05.16.
@@ -39,17 +35,8 @@ public class Twitch implements IModule {
     public void run() {
         connection = DBUtils.connect();
         notifier = new StreamNotifier();
-    }
 
-    @EventSubscriber
-    public void onDiscordInit(GuildCreateEvent event) {
-        try {
-            JobDetail jobDetail = JobBuilder.newJob(TwitchJob.class).withIdentity("twitch").build();
-            Trigger trigger = TriggerBuilder.newTrigger().startNow().withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(30).repeatForever()).build();
-            StdSchedulerFactory.getDefaultScheduler().scheduleJob(jobDetail, trigger);
-            StdSchedulerFactory.getDefaultScheduler().start();
-        } catch (SchedulerException e) {
-            e.printStackTrace();
-        }
+        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+        service.scheduleWithFixedDelay((Runnable) () -> Twitch.notifier.check(), 2, 30, TimeUnit.SECONDS);
     }
 }

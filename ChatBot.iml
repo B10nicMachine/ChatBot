@@ -26,9 +26,7 @@
     <orderEntry type="library" name="Gradle: com.neovisionaries:nv-websocket-client:1.19" level="project" />
     <orderEntry type="library" name="Gradle: net.objecthunter:exp4j:0.4.5" level="project" />
     <orderEntry type="library" name="Gradle: com.googlecode.json-simple:json-simple:1.1.1" level="project" />
-    <orderEntry type="library" name="Gradle: org.quartz-scheduler:quartz:2.2.2" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.10" level="project" />
-    <orderEntry type="library" name="Gradle: c3p0:c3p0:0.9.1.1" level="project" />
     <orderEntry type="library" name="Gradle: org.hamcrest:hamcrest-core:1.1" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.21" level="project" />
     <orderEntry type="library" name="Gradle: org.slf4j:slf4j-simple:1.7.21" level="project" />
